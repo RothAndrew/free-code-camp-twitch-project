@@ -13,9 +13,9 @@ import { NameListService } from '../shared/index';
 
 export class HomeComponent implements OnInit {
 
-  newName: string = '';
-  errorMessage: string;
-  names: any[] = [];
+  // newName: string = '';
+  // errorMessage: string;
+  // names: any[] = [];
 
   /**
    * Creates an instance of the HomeComponent with the injected
