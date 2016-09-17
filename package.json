@@ -120,10 +120,13 @@
     "@angular/platform-browser": "2.0.0-rc.5",
     "@angular/platform-browser-dynamic": "2.0.0-rc.5",
     "@angular/router": "3.0.0-rc.1",
-    "es6-module-loader": "^0.17.8",
     "core-js": "^2.4.0",
+    "es6-module-loader": "^0.17.8",
+    "jquery": "^3.1.0",
+    "requirejs": "^2.3.1",
     "rxjs": "5.0.0-beta.6",
     "systemjs": "0.19.27",
+    "twitch-sdk": "^0.3.1",
     "zone.js": "0.6.13"
   }
 }

@@ -12,5 +12,5 @@
 </ul>-->
 
 <ul>
-  
+  <li *ngFor="let TwitchUser of TwitchUsers"><img style="height:50px" src="{{TwitchUser.logo}}" alt=""> {{TwitchUser.name}} - {{TwitchUser.status}}</li>
 </ul>
