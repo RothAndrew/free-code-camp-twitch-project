@@ -12,5 +12,5 @@
 </ul>-->
 
 <ul>
-  <li *ngFor="let TwitchUser of TwitchUsers"><img style="height:50px" src="{{TwitchUser.logo}}" alt=""> {{TwitchUser.name}} - {{TwitchUser.status}}</li>
+  <li *ngFor="let TwitchUser of TwitchUsers | orderBy : ['name']"><a href="https://www.twitch.tv/{{TwitchUser.name}}"><img style="height:50px" src="{{TwitchUser.logo}}" alt=""> {{TwitchUser.displayName}} - {{TwitchUser.status}}</a></li>
 </ul>

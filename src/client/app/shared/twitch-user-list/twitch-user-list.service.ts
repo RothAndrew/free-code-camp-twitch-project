@@ -4,11 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-export class TwitchUser{
+export class TwitchUser {
   name: string;
+  displayName: string;
   logo: string;
   status: string;
 }
+
+declare var Twitch: any;
 
 /**
  * This class provides the TwitchUserList service with methods to read names and add names.
@@ -37,40 +40,47 @@ export class TwitchUserListService {
     return this.http.get('/assets/twitch-users.json')
                     .map((res: Response) => res.json())
                     .map((twitchUsers:any[]) => {
-                      let result:TwitchUser[] = [];
-                      if(twitchUsers){
+                      let result: TwitchUser[] = [];
+                      if(twitchUsers) {
                         twitchUsers.forEach((twitchUser) => {
-                          Twitch.api({method: `streams/${twitchUser}`, params: {client_id: 'bxz6xvq7rangjrvbqceowmnggccvw3p'}}, function(error:any,response:any){
-                            if(response.stream){
-                              let newTwitchUser: TwitchUser = new TwitchUser();
-                              newTwitchUser.name = response.stream.channel.display_name;
-                              newTwitchUser.logo = response.stream.channel.logo;
-                              newTwitchUser.status = response.stream.channel.status;
-                              result.push(newTwitchUser);
-                            }
-                            else{
-                              Twitch.api({method: `channels/${twitchUser}`, params: {client_id: 'bxz6xvq7rangjrvbqceowmnggccvw3p'}}, function(error: any, response: any){
-                                console.log(response);
-                                let newTwitchUser: TwitchUser = new TwitchUser();
-                                newTwitchUser.name = response.display_name;
-                                newTwitchUser.logo = response.logo;
-                                newTwitchUser.status = "Not currently streaming...";
-                                result.push(newTwitchUser);
-                              });
-                            }
-                          });
+                          Twitch.api({method: `streams/${twitchUser}`,
+                                     params: {client_id: 'bxz6xvq7rangjrvbqceowmnggccvw3p'}},
+                                     function(error:any,response:any){
+                                        if(error) {
+                                          let newTwitchUser: TwitchUser = new TwitchUser();
+                                          newTwitchUser.name = twitchUser;
+                                          newTwitchUser.displayName = twitchUser;
+                                          newTwitchUser.logo = 'http://placehold.it/50x50';
+                                          newTwitchUser.status = error.message;
+                                          result.push(newTwitchUser);
+                                        } else if(response.stream) {
+                                          let newTwitchUser: TwitchUser = new TwitchUser();
+                                          newTwitchUser.name = response.stream.channel.name;
+                                          newTwitchUser.displayName = response.stream.channel.display_name;
+                                          newTwitchUser.logo = response.stream.channel.logo;
+                                          newTwitchUser.status = response.stream.channel.status;
+                                          result.push(newTwitchUser);
+                                        } else {
+                                          Twitch.api({method: `channels/${twitchUser}`,
+                                                      params: {client_id: 'bxz6xvq7rangjrvbqceowmnggccvw3p'}},
+                                                      function(error: any, response: any){
+                                                        let newTwitchUser: TwitchUser = new TwitchUser();
+                                                        newTwitchUser.name = response.name;
+                                                        newTwitchUser.displayName = response.display_name;
+                                                        newTwitchUser.logo = response.logo;
+                                                        newTwitchUser.status = 'Not currently streaming...';
+                                                        result.push(newTwitchUser);
+                                                      });
+                                        }
+                                      });
                         });
                       }
+                      console.log(result);
                       return result;
                     })
                     .catch(this.handleError);
   }
 
-  private extractData(res: Response){
-    let body = res.json();
-    
-  }
-  
 
   /**
     * Handle HTTP error
