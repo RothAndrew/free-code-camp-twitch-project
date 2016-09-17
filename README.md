@@ -1,4 +1,28 @@
-# Introduction
+# FREECODECAMP TWITCH PROJECT - Built on Angular2-Seed
+Quick start
+```bash
+git clone --depth 1 https://github.com/RothAndrew/free-code-camp-twitch-project.git
+cd free-code-camp-twitch-project.git
+# install the project's dependencies
+npm install
+# watches your files and uses livereload by default
+npm start
+# api document for the app
+# npm run build.docs
+
+# dev build
+npm run build.dev
+# prod build
+npm run build.prod
+
+# dev build of multiple applications (by default the value of --app is "app")
+npm start -- --app baz
+npm start -- --app foo
+npm start -- --app bar
+```
+
+
+# Angular2-Seed Introduction
 
 [![Angular 2 Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://angular.io/styleguide)
 [![Build Status](https://travis-ci.org/mgechev/angular2-seed.svg?branch=master)](https://travis-ci.org/mgechev/angular2-seed)
